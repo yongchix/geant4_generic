@@ -118,6 +118,12 @@
 #include "G4CrossSectionInelastic.hh"
 #include "G4NeutronInelasticXS.hh"
 
+// 03/03/2021, by Yongchi
+// refer to advanced/underground_physics/src/DMXPhysicsList.cc
+#include "G4NuclearLevelData.hh"
+#include "G4NuclideTable.hh"
+
+
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -144,6 +150,17 @@ UKALPhysicsList::UKALPhysicsList()
 
 
     G4LossTableManager::Instance();
+
+    // 03/03/2020, by Yongchi
+    // refer to advanced/underground_physics/src/DMXPhysicsList.cc
+    G4DeexPrecoParameters* deex = G4NuclearLevelData::GetInstance()->GetParameters();
+    deex->SetStoreICLevelData(true);
+    // deex->SetMaxLifeTime(G4NuclideTable::GetInstance()->GetThresholdOfHalfLife()
+    //                    /std::log(2.));
+    deex->SetMaxLifeTime(1000*ms); 
+
+
+
     SetVerboseLevel(1);
 }
 
@@ -403,7 +420,11 @@ void UKALPhysicsList::AddPhysicsList(const G4String& name)
     } else if(name == "Standard_EM") {
         delete fEmPhysicsList;
         fEmPhysicsList = new G4EmStandardPhysics();
-    } else if(name == "LowEnergy_EM_Penelope") {
+    } else if(name == "Standard_EM2") {
+        delete fEmPhysicsList; 
+        fEmPhysicsList = new G4EmStandardPhysics_option2();
+    }
+    else if(name == "LowEnergy_EM_Penelope") {
         delete fEmPhysicsList;
         fEmPhysicsList = new G4EmPenelopePhysics();
     }

@@ -152,10 +152,11 @@ void B2EventAction::EndOfEventAction(const G4Event* event)
 			G4String particleName = (*DHCHPGe)[i]->GetParticlename(); 
 			G4double energy = (*DHCHPGe)[i]->GetEdep()/keV; ///keV; 
 			G4int stepNo = (*DHCHPGe)[i]->GetStepno(); 
-			if(particleName == "e-") {
+			if(particleName == "e-" || particleName == "gamma") {
 				energyTotal += energy; 
 			}
 			// energyTotal += energy; 
+			// G4cout << "Particle type = " << particleName << G4endl; 
 		}
 
 		// add resolution to detectors
@@ -167,11 +168,6 @@ void B2EventAction::EndOfEventAction(const G4Event* event)
 											analysis->f1Res->Eval(energyTotal));  
 				analysis->h1HPGe->Fill(energyTotal); 
 			}
-
-			// G4cout << " Energy = " 
-			// 	   << energyTotal 
-			// 	   << " keV from " << nHits << " hits"
-			// 	   << G4endl; 
 		}
 		
 

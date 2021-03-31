@@ -24,6 +24,6 @@
 /gps/particle neutron
 /gps/energy 3200 keV
 
-#/run/printProgress 20000
-/run/beamOn 200000000
+/run/printProgress 200000
+/run/beamOn 100
 
