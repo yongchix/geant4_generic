@@ -58,9 +58,10 @@ using namespace std;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-B2EventAction::B2EventAction()
+B2EventAction::B2EventAction() //B2SteppingAction *sa)
 	: G4UserEventAction()
 {
+//	stepAction = sa; 
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -113,7 +114,15 @@ void B2EventAction::EndOfEventAction(const G4Event* event)
 	G4int sampleID = G4SDManager::GetSDMpointer()->GetCollectionID("ukalSampleHitsCollection");  
 	G4int hpgeID = G4SDManager::GetSDMpointer()->GetCollectionID("ukalHPGeHitsCollection"); 
 
+	// // the processing below is based on steps
+	// for(int i = 0; i < 6000; i++) {
+	// 	G4cout << stepAction->particleNames[i] << G4endl; 
+	// 	if(stepAction->particleNames[i].compareTo("") == 0 ) break; 
+	// }
 
+
+
+	// the processing below is based on the collection of hits
 	G4HCofThisEvent *HCE = event->GetHCofThisEvent(); 
 	// B2TrackerHitsCollection *DHTracker = 0; 
 	B2TrackerHitsCollection *DHCHPGe = 0; 
@@ -136,6 +145,18 @@ void B2EventAction::EndOfEventAction(const G4Event* event)
 			G4int stepNo = (*DHCSample)[i]->GetStepno(); 
 			if(particleName == "e-") {
 				energyTotal += energy; 
+			}
+			// by Yongchi: 03/31/2021, output the position where gamma photons are created
+			if(particleName == "gamma" && (*DHCSample)[i]->GetParentno() == 1) {
+				// G4cout << "Step No. = " << stepNo
+				// 	   << ", Position = (" << (*DHCSample)[i]->GetPrePosition().x()/mm
+				// 	   << "," << (*DHCSample)[i]->GetPrePosition().y()/mm
+				// 	   << "," << (*DHCSample)[i]->GetPrePosition().z()/mm
+				// 	   << ")" << G4endl; 
+				UKALAnalysisManager *analysis = UKALAnalysisManager::GetInstance();
+				analysis->h3GammaCollection->Fill((*DHCSample)[i]->GetPrePosition().x()/mm, 
+				                                  (*DHCSample)[i]->GetPrePosition().y()/mm, 
+												  (*DHCSample)[i]->GetPrePosition().z()/mm); 
 			}
 		}
 		//energyTotal = gRandom->Gaus(energyTotal, 0.01*energyTotal/2.35); 

@@ -66,10 +66,12 @@ public:
     void SetCheckOverlaps(G4bool );
 
 private:     // by Yongchi - for UKAL
+    G4bool fUseGasCell; 
     G4bool fUseUKALSample; 
     G4bool fUseUKALHPGe; 
     G4bool fUseUKALBGO; 
 public:     // by Yongchi - for UKAL
+    void SetUseGasCell(G4bool value) {fUseGasCell = value; }
     void SetUseUKALSample(G4bool value) {fUseUKALSample = value; }
     void SetUseUKALHPGe(G4bool value) {fUseUKALHPGe = value; }
     void SetDetectorPhi(G4double value) {hpgePhi = value; }
@@ -82,7 +84,7 @@ private:
   
     // data members
     G4int fNbOfChambers;
-
+ 
     G4LogicalVolume*   fLogicTarget;     // pointer to the logical Target
     G4LogicalVolume**  fLogicChamber;    // pointer to the logical Chamber
 
@@ -91,10 +93,18 @@ private:
 
     //------------------------------------------------------------------------
     // by Yongchi 
+    G4Material *gasCellMater; 
     G4Material *sampleMater; 
     G4Material *hpgeMater; 
     // by Yongchi - for UKAL
     UKALMaterial *managerUKALMaterial; 
+    // gas cell
+    G4Tubs *solidGasCell; 
+    G4LogicalVolume *logicGasCell; 
+    G4VPhysicalVolume *physiGasCell; 
+    G4double fGasCell_zpos; 
+    G4ThreeVector fGasCellPos; 
+    // sample
     G4Tubs *solidUKALSample; 
     G4LogicalVolume *logicUKALSample; 
     G4VPhysicalVolume *physiUKALSample; 

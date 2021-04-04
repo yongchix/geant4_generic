@@ -50,7 +50,13 @@ void UKALAnalysisManager::book() {
     h1Sample = new TH1D("h1Sample", "Energy Deposition in Sample, gated on e-; keV; Counts/0.25 keV", 
                         4096*4, 0, 4096); 
     h1HPGe = new TH1D("h1HPGe", "Energy Deposition in HPGe, gated on e-; keV; Counts/0.25 keV", 
-                      4096*4, 0, 4096);                     
+                      4096*4, 0, 4096);           
+    // for gamma rays         
+    h3GammaCollection = new TH3D("h3GammaCollection", "Production of #gamma Rays;x [mm];y [mm];z [mm]", 
+                                 40, -10, 10, 
+                                 40, -10, 10, 
+                                 40, -10, 10); 
+    
 }
 
 // void UKALAnalysisManager::FillTH1D(TH1D *h1, G4double energy) {

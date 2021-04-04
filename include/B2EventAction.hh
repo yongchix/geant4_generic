@@ -36,12 +36,15 @@
 
 #include "TF1.h"
 
+#include "B2SteppingAction.hh"
+
 /// Event action class
 
 class B2EventAction : public G4UserEventAction
 {
   public:
-    B2EventAction();
+    // B2EventAction(B2SteppingAction *sa);
+    B2EventAction(); 
     virtual ~B2EventAction();
 
     virtual void  BeginOfEventAction(const G4Event* );
@@ -49,6 +52,7 @@ class B2EventAction : public G4UserEventAction
 
   private: 
     TF1 *f1Res; 
+    // B2SteppingAction *stepAction; 
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

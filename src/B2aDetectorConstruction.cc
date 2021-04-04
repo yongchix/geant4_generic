@@ -115,6 +115,7 @@ void B2aDetectorConstruction::DefineMaterials()
 	fChamberMaterial = nistManager->FindOrBuildMaterial("G4_Xe");
 
 	// by Yongchi - for UKAL
+	gasCellMater = managerUKALMaterial->GetMaterial("T2"); 
     sampleMater = managerUKALMaterial->GetMaterial("XeF2"); 
     hpgeMater   = managerUKALMaterial->GetMaterial("Ge");
 
@@ -221,9 +222,28 @@ G4VPhysicalVolume* B2aDetectorConstruction::DefineVolumes()
 
 
 	// for UKAL
+	// --------- tritium gas cell ---------
+	G4double gasCellRadius = 5*mm; 
+	G4double gasCellLength = 15*mm; 
+	solidGasCell = new G4Tubs("solidGasCell", 0, gasCellRadius, gasCellLength, 0, 360*degree); 
+	logicGasCell = new G4LogicalVolume(solidGasCell, 
+									   //sampleMater, 
+								       gasCellMater, 
+									   "logicGasCell"); 	
+	fGasCell_zpos = -15*mm; // - 4*cm; 
+	fGasCellPos = G4ThreeVector(0, 0, -15*mm-4*cm); // 4 cm from the center of the scattering sample
+	G4RotationMatrix *rotateGasCell = new G4RotationMatrix(); 
+	if(fUseGasCell) {
+		physiGasCell = new G4PVPlacement(rotateGasCell, 
+									     fGasCellPos, 
+										 logicGasCell, "gasCell", 
+										 worldLV, 
+										 false, 0, true); 
+	}
+
 	// --------- Scattering Sample ---------
 	G4double sampleRadius = 9*mm; 
-	G4double sampleDz     = 21*mm; 
+	G4double sampleDz     = 21/2.0*mm; // half length
 	// solid
 	solidUKALSample = new G4Tubs("solidUKALSample", 0, sampleRadius, sampleDz, 0, 360*degree); 
 	// logical 
@@ -235,7 +255,7 @@ G4VPhysicalVolume* B2aDetectorConstruction::DefineVolumes()
 										  "logicUKALSample"); 
 	// physical
 	// placement, see below CeBr3 for refernece, use a G4ThreeVector for xyz position as a whole
-	fUKALSample_zpos = -0.5*sampleDz; 
+	// fUKALSample_zpos = -0.5*sampleDz; 
 	fUKALSamplePos = G4ThreeVector(0, 0); 
 	G4RotationMatrix *rotateUKALSample = new G4RotationMatrix(); 
 	rotateUKALSample->rotateX(90.*degree); 
@@ -248,8 +268,8 @@ G4VPhysicalVolume* B2aDetectorConstruction::DefineVolumes()
 	}
 	// --------- HPGe ---------
 	// Yongchi - Create the HPGe Detector
-	G4double hpgeRadius = 31.5*mm; // 31.5mm
-	G4double hpgeDz     = 80*mm; 
+	G4double hpgeRadius = 5.5/2.0*cm; // 31.5mm
+	G4double hpgeDz     = 15/2.0*cm; // half length
 	// solid
 	solidUKALHPGe = new G4Tubs("solidUKALHPGe", 0, hpgeRadius, hpgeDz, 0, 360*degree); 
 	// logical
@@ -388,7 +408,11 @@ void B2aDetectorConstruction::ConstructSDandField()
 	B2TrackerSD* aHPGeSD = new B2TrackerSD(ukalHPGeSDname, "ukalHPGeHitsCollection"); 
 	G4SDManager::GetSDMpointer()->AddNewDetector(aHPGeSD); 
 	SetSensitiveDetector("logicUKALHPGe", aHPGeSD, true); 			
-
+	// gas cell
+	G4String ukalGasCellSDname = "UKAL/GasCellSD"; 
+	B2TrackerSD *aGasCellSD = new B2TrackerSD(ukalGasCellSDname, "ukalGasCellHitsCollection"); 
+	G4SDManager::GetSDMpointer()->AddNewDetector(aGasCellSD); 
+	SetSensitiveDetector("logicGasCell", aGasCellSD, true); 
 
 
 

@@ -34,7 +34,7 @@
 /vis/viewer/set/viewpointThetaPhi 30 60
 
 # Specify zoom value:
-/vis/viewer/zoom 20
+/vis/viewer/zoom 30
 
 # Specify style (surface, wireframe, auxiliary edges,...)
 #/vis/viewer/set/style wireframe
@@ -42,7 +42,7 @@
 #/vis/viewer/set/lineSegmentsPerCircle 100
 
 # Draw coordinate axes:
-/vis/scene/add/axes 0 0 0 0.1 m
+/vis/scene/add/axes 0 0 0 0.05 m
 
 #
 # Draw smooth trajectories at end of event, showing trajectory points
@@ -56,6 +56,7 @@
 # Draw hits at end of event:
 #/vis/scene/add/hits
 
+#/vis/scene/add/extent
 
 # trajectories   
 /vis/scene/add/trajectories                             
@@ -74,12 +75,12 @@
 #/vis/filtering/trajectories/particleFilter-0/add ion                           
 #/vis/filtering/trajectories/particleFilter-0/add e-        
 #/vis/filtering/trajectories/particleFilter-0/add e+ 
-#/vis/filtering/trajectories/particleFilter-0/add proton   
+/vis/filtering/trajectories/particleFilter-0/add proton   
 
 /vis/multithreading/maxEventQueueSize -1
 
 # To superimpose all of the events from a given run:
-/vis/scene/endOfEventAction accumulate
+/vis/scene/endOfEventAction accumulate 20000
 /vis/ogl/set/displayListLimit 2000000
 
 

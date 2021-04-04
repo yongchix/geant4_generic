@@ -7,6 +7,7 @@
 #include "TROOT.h"
 #include "TH1D.h"
 #include "TH2D.h"
+#include "TH3D.h"
 #include "TF1.h"
 
 class UKALAnalysisMessenger; 
@@ -35,6 +36,8 @@ class UKALAnalysisManager {
         TH1D *h1Test; 
         TH1D *h1HPGe; 
         TH1D *h1Sample; 
+        // 3d histogram
+        TH3D *h3GammaCollection; 
 
     public: 
         void SetFilename(G4String name); 

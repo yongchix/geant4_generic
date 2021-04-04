@@ -328,9 +328,10 @@ void UKALPhysicsList::ConstructProcess()
 
 void UKALPhysicsList::AddPhysicsList(const G4String& name)
 {
-    if (verboseLevel>-1) {
-        G4cout << "UKALPhysicsList::AddPhysicsList: <" << name << ">" << G4endl;
-    }
+    // if (verboseLevel>-1) {
+    //     G4cout << "UKALPhysicsList::AddPhysicsList: <" << name << ">" << G4endl;
+    // }
+    G4cout << "UKALPhysicsList::AddPhysicsList: <" << name << ">" << G4endl;
     
     // if (name == fEmName) return;
     

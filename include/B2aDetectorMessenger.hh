@@ -69,6 +69,7 @@ private:
 
     // by Yongchi - for UKAL
     // add or remove detectors
+    G4UIcmdWithABool*          useGasCellCmd; 
     G4UIcmdWithABool*          useUKALSampleCmd; 
     G4UIcmdWithABool*          useUKALHPGeCmd; 
     G4UIcmdWithABool*          useUKALBGOCmd;

@@ -67,6 +67,11 @@ B2aDetectorMessenger::B2aDetectorMessenger(B2aDetectorConstruction* Det)
 
 	// by Yongchi - for UKAL
 	// add or remove detectors
+	useGasCellCmd = new G4UIcmdWithABool("/UKAL_sim/det/UseGasCell", this); 
+	useGasCellCmd->SetGuidance("place the gas cell"); 
+	useGasCellCmd->SetParameterName("choice", false); 
+	useGasCellCmd->AvailableForStates(G4State_PreInit); 
+	// Scattering Sample
 	useUKALSampleCmd = new G4UIcmdWithABool("/UKAL_sim/det/UseUKALSample", this); 
 	useUKALSampleCmd->SetGuidance("activate UKAL Scattering Sample"); 
 	useUKALSampleCmd->SetParameterName("choice", false); 
@@ -125,6 +130,9 @@ void B2aDetectorMessenger::SetNewValue(G4UIcommand* command,G4String newValue)
 
 	// by Yongchi - for UKAL
 	// add or remove detectors
+	if(command == useGasCellCmd) {
+		fDetectorConstruction->SetUseGasCell(useGasCellCmd->GetNewBoolValue(newValue)); 
+	}
 	if(command == useUKALSampleCmd) {
 		fDetectorConstruction->SetUseUKALSample(useUKALSampleCmd->GetNewBoolValue(newValue)); 
 	}

@@ -121,6 +121,21 @@ G4bool B2TrackerSD::ProcessHits(G4Step* aStep,
 
 	G4ThreeVector pre = aStep->GetPreStepPoint()->GetPosition();
 	aHit->SetPrePosition( pre );
+	// // by Yongchi: 03/31/2021
+	// if(nam == "gamma" && pa == 1 && volname == "UKALSample") {
+	// 	G4cout << "=============" << G4endl; 
+	// 	G4cout << "Prev. Position   = (" << pre.x()/mm
+	// 		   << "," << pre.y()/mm
+	// 		   << "," << pre.z()/mm << ")"
+	// 		   << G4endl; 
+	// 	G4cout << "-------------" << G4endl; 
+	// 	G4cout << "Current Position = (" << aStep->GetTrack()->GetPosition().x()/mm
+	// 		   << "," << aStep->GetTrack()->GetPosition().y()/mm
+	// 		   << "," << aStep->GetTrack()->GetPosition().z()/mm << ")"
+	// 		   << G4endl 
+	// 		   << "=============" << G4endl; 
+	// }
+
 	G4ThreeVector post =aStep->GetPostStepPoint()->GetPosition();
 	aHit->SetPostPosition( post );
 	G4ThreeVector del = aStep->GetDeltaPosition();

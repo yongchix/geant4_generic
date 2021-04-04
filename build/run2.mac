@@ -11,19 +11,18 @@
 
 # make the distribution of gamma-rays a cone
 /gps/ang/type iso
-/gps/ang/mintheta 179.5 deg
+/gps/ang/mintheta 180 deg
 /gps/ang/maxtheta 180 deg
 /gps/ang/minphi 0 deg
 /gps/ang/maxphi 360 deg
-/gps/position 0 0 1
-/gps/position 0 0 -2 cm
+/gps/position 0 0 -4 cm
 
 #/gps/particle ion
 #/gps/ion 28 58 0 0 # Z A Q E
 
 /gps/particle neutron
-/gps/energy 3200 keV
+/gps/energy 3.2 MeV
 
 /run/printProgress 200000
-/run/beamOn 100
+/run/beamOn 1000
 
